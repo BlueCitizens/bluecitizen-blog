@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dimple.project.demo.mapper.GrifonMapper">
+    <resultMap type="com.dimple.project.demo.domain.Doll" id="DollDetail">
+        <result property="doll_id" column="doll_id"/>
+        <result property="doll_name" column="doll_name"/>
+        <result property="star" column="star"/>
+        <result property="doll_type" column="doll_type"/>
+        <result property="isReform" column="reform"/>
+        <result property="build_time" column="build_time"/>
+        <result property="value" column="value"/>
+    </resultMap>
+    <select id="selectDollList" resultMap="DollDetail">
+        SELECT
+        g.doll_id,
+        g.doll_name,
+        g.star,
+        g.doll_type,
+        g.reform,
+        g.build_time,
+        g.value
+        FROM
+        grifon g
+        WHERE
+        g.doll_id IS NOT NULL
+        <if test="build_time != null "><!-- 开始时间检索 -->
+            AND
+            time_format(g.build_time, '%H%i%s') &gt;= time_format(#{build_time}, '%H%i%s')
+            AND time_format(g.build_time, '%H%i%s') &lt; time_format(
+            (
+            concat(
+            time_format(#{build_time}, '%H'),
+            ':',
+            time_format(#{build_time}, '%i') + (
+            9 - time_format(#{build_time}, '%i') % 10
+            ),
+            ':',
+            time_format(#{build_time}, '%s')
+            )
+            ),
+            '%H%i%s'
+            )
+        </if>
+        <if test="doll_name != null">
+            AND
+            g.doll_name like CONCAT('%', #{doll_name},'%')
+        </if>
+        <if test="value != null">
+            AND
+            g.doll_type = #{doll_type}
+        </if>
+        <if test="doll_type != null">
+            AND
+            g.value like concat(#{value},'%')
+        </if>
+        ORDER BY
+        g.star DESC
+    </select>
+    <select id="selectAllDollName" resultType="String">
+        SELECT
+            g.doll_name
+        FROM
+            grifon g
+    </select>
+</mapper>
