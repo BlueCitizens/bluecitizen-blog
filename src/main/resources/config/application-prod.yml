@@ -5,9 +5,9 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
     druid:
 #      url: jdbc:mysql://mysql:3306/bluecitizen-blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
-      url: jdbc:mysql://localhost:3306/bluecitizen-blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://localhost:3306/bluecitizen_blog?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
       username: root
-      password: 794171
+      password: 794171354dxy!
       # 初始连接数
       initialSize: 5
       # 最小连接池数量
